@@ -4,6 +4,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"sync"
 )
 
 func main() {
@@ -39,8 +40,32 @@ func main() {
 		// cr, tab   = "\n", "\t"
 		c, cores = "curl", 5
 	)
+	// res := http.Response{}
+
+	var wg sync.WaitGroup
+	for i := 0; i < cores+1; i++ {
+		wg.Add(1)
+		go getFloorPrice(ca[i])
+		wg.Done()
+	}
+	// will wait until wg.Done is called 10 times
+	// since we made wg.Add(1) call 10 times
+	wg.Wait()
 
 	results = getFloorPrices(ca) // single For loop of all contract Addresses fetched via GET
+	// for _, v := range ca {
+	// 	uri := `https://eth-mainnet.g.alchemy.com/nft/v2/` + APIkey + `/getFloorPrice?contractAddress=` + v
+	// 	req, _ := http.NewRequest("GET", uri, nil)
+	// 	req.Header.Add("accept", "application/json")
+	// 	res, er := http.DefaultClient.Do(req)
+	// 	if er != nil {
+	// 		log.Fatal(er)
+	// 	}
+	// 	defer res.Body.Close()
+	// 	body, _ := io.ReadAll(res.Body)
+	// 	results = append(results, string(body))
+	// }
+
 	log.Println(results)
 	log.Println("\n", string("===End of program execution===   for  "), len(results), " contract addresses!")
 }
