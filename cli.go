@@ -1,9 +1,13 @@
 package main
 
 import (
+	"bufio"
 	"io"
 	"log"
 	"net/http"
+	"os"
+	"os/exec"
+	"strings"
 )
 
 /*
@@ -39,7 +43,7 @@ const (
 )
 */
 
-func Tamain() {
+func Tmain() {
 	// Run("A> ", os.Stdin, os.Stdout)
 	// os.Exit(0)
 
@@ -58,4 +62,64 @@ func Tamain() {
 
 	// caRes := exec.Command(curler)
 
+}
+
+func Run(prompt string, in io.Reader, out io.Writer) {
+	scanner := bufio.NewScanner(in)
+	for {
+		log.Println(prompt)
+		scanned := scanner.Scan()
+		if !scanned {
+			return
+		}
+		line := scanner.Text()
+		if line == "exit" || line == "" || line == "quit" {
+			os.Exit(0)
+		}
+		parts := strings.Split(line, "")
+		if len(parts) == 0 {
+			os.Exit(0)
+		}
+
+		cmd := strings.TrimSpace(parts[0])
+		args := parts[1:]
+		runner := exec.Command(cmd, args...)
+		cmdResult, err := runner.CombinedOutput()
+
+		if err != nil {
+			log.Println(err.Error())
+			os.Exit(1)
+		}
+		out.Write(cmdResult)
+	}
+}
+
+func Runcli(prompt string, in io.Reader, out io.Writer) {
+	scanner := bufio.NewScanner(in)
+	for {
+		log.Println(prompt)
+		scanned := scanner.Scan()
+		if !scanned {
+			return
+		}
+		line := scanner.Text()
+		if line == "exit" || line == "" || line == "quit" {
+			os.Exit(0)
+		}
+		parts := strings.Split(line, "")
+		if len(parts) == 0 {
+			os.Exit(0)
+		}
+
+		cmd := strings.TrimSpace(parts[0])
+		args := parts[1:]
+		runner := exec.Command(cmd, args...)
+		cmdResult, err := runner.CombinedOutput()
+
+		if err != nil {
+			log.Println(err.Error())
+			os.Exit(1)
+		}
+		out.Write(cmdResult)
+	}
 }

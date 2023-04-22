@@ -58,7 +58,7 @@ tested_working_uri
 curl --request GET --url "https://eth-mainnet.g.alchemy.com/nft/v2/WtwzAuh31WD6CR1u8p9sMv46ShxLJKuw/getFloorPrice?contractAddress=0xe785E82358879F061BC3dcAC6f0444462D4b5330" --header "accept: application/json"
 */
 
-func main() {
+func Qmain() {
 	/*
 		for _, e := range ca {
 
