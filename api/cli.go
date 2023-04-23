@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"bufio"
@@ -44,10 +44,8 @@ const (
 */
 
 func Tmain() {
-	// Run("A> ", os.Stdin, os.Stdout)
-	// os.Exit(0)
-
-	url := "https://eth-mainnet.g.alchemy.com/nft/v2/" + APIkey + "/getFloorPrice?contractAddress=" + contractAddress
+	cr := "\n"
+	url := "https://eth-mainnet.g.alchemy.com/nft/v2/" + APIkey + "/getFloorPrice?contractAddress=" + CAs[0]
 	req, _ := http.NewRequest("GET", url, nil)
 
 	req.Header.Add("accept", "application/json")
