@@ -85,7 +85,6 @@ func curlRunner(ca []string) *curlResultSet {
 		if err != nil {
 			log.Println(err.Error())
 		}
-		// fmt.Printf("%s", c)
 		results = append(results, fmt.Sprintf("%s", c))
 	}
 	return &results

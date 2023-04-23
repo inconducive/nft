@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func main() {
+func emain() {
 	var (
 		// contractAddress = ""
 		ca = []string{
